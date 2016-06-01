@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Implements hook_node_info().
+ */
+function hosting_scheduled_task_node_info() {
+  $types["scheduled_task"] = array(
+    "type" => 'scheduled_task',
+    "name" => t('Scheduled Task'),
+    'base' => 'hosting_scheduled_task',
+    "has_title" => FALSE,
+    "title_label" => '',
+//    "description" => hosting_node_help("task"),
+    "has_body" => 0,
+    "body_label" => '',
+    "min_word_count" => 0,
+  );
+
+  return $types;
+}
+
+/**
+ * Implements hook_node_access().
+ */
+function hosting_scheduled_task_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+
+  if ($type == 'scheduled_task') {
+    if (user_access('administer scheduled tasks', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function hosting_scheduled_task_permission() {
+  return array(
+    'administer scheduled tasks' => array(
+      'title' => t('Administer scheduled tasks'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_load().
+ */
+function hosting_scheduled_task_load($nodes) {
+  $vids = array();
+  foreach ($nodes as $node) {
+    $vids[] = $node->vid;
+  }
+  $query = db_select('hosting_scheduled_task', 't')
+    ->fields('t', array('nid', 'task_type', 'rid', 'active', 'onetime', 'crontab', 'last', 'next'))
+    ->condition('t.vid', $vids);
+  foreach ($query->execute() as $row) {
+    $nodes[$row->nid]->task_type = $row->task_type;
+    $nodes[$row->nid]->rid = $row->rid;
+    $nodes[$row->nid]->active = $row->active;
+    $nodes[$row->nid]->onetime = $row->onetime;
+    $nodes[$row->nid]->crontab = $row->crontab;
+    $nodes[$row->nid]->last = $row->last;
+    $nodes[$row->nid]->next = $row->next;
+  }
+
+  // Add the task arguments too.
+  $query = db_select('hosting_scheduled_task_arguments', 'ta')
+    ->fields('ta', array('nid', 'name', 'value'))
+    ->condition('ta.vid', $vids);
+  foreach ($query->execute() as $row) {
+    $nodes[$row->nid]->task_args[$row->name] = $row->value;
+  }
+}
