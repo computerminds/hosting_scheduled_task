@@ -43,183 +43,21 @@ function hosting_scheduled_task_permission() {
   );
 }
 
-/**
- * Implements hook_load().
- */
-function hosting_scheduled_task_load($nodes) {
-  $vids = array();
-  foreach ($nodes as $node) {
-    $vids[] = $node->vid;
-  }
-  $query = db_select('hosting_scheduled_task', 't')
-    ->fields('t', array('nid', 'task_type', 'rid', 'active', 'onetime', 'crontab', 'last', 'next'))
-    ->condition('t.vid', $vids);
-  foreach ($query->execute() as $row) {
-    $nodes[$row->nid]->task_type = $row->task_type;
-    $nodes[$row->nid]->rid = $row->rid;
-    $nodes[$row->nid]->active = $row->active;
-    $nodes[$row->nid]->onetime = $row->onetime;
-    $nodes[$row->nid]->crontab = $row->crontab;
-    $nodes[$row->nid]->last = $row->last;
-    $nodes[$row->nid]->next = $row->next;
-  }
-
-  // Add the task arguments too.
-  $query = db_select('hosting_scheduled_task_arguments', 'ta')
-    ->fields('ta', array('nid', 'name', 'value'))
-    ->condition('ta.vid', $vids);
-  foreach ($query->execute() as $row) {
-    $nodes[$row->nid]->task_args[$row->name] = $row->value;
-  }
-}
-
-/**
- * Implements hook_insert().
- */
-function hosting_scheduled_task_insert($node) {
-  $id = db_insert('hosting_scheduled_task')
-    ->fields(array(
-      'vid' => $node->vid,
-      'nid' => $node->nid,
-      'task_type' => $node->task_type,
-      'rid' => $node->rid,
-      'active' => $node->active,
-      'onetime' => $node->onetime,
-      'crontab' => $node->crontab,
-      'last' => $node->last,
-      'next' => $node->next,
-    ))
-    ->execute();
-
-  if (isset($node->task_args) && is_array($node->task_args)) {
-    foreach ($node->task_args as $key => $value) {
-      $id = db_insert('hosting_scheduled_task_arguments')
-        ->fields(array(
-          'vid' => $node->vid,
-          'nid' => $node->nid,
-          'name' => $key,
-          'value' => $value,
-        ))
-        ->execute();
+function hosting_scheduled_task_task_type_options() {
+  $options = array();
+  foreach (hosting_available_tasks() as $target_type => $tasks) {
+    foreach ($tasks as $task_type => $task) {
+      $options[$target_type . '__' . $task_type] = t('!target_name - !task_name', array('!target_name' => node_type_get_name($target_type), '!task_name' => $task['title']));
     }
   }
-}
-
-/**
- * Implements hook_update().
- *
- * As an existing node is being updated in the database, we need to do our own
- * database updates.
- */
-function hosting_scheduled_task_update($node) {
-  // If this is a new node or we're adding a new revision.
-  if (!empty($node->revision)) {
-    hosting_scheduled_task_insert($node);
-  }
-  else {
-    db_update('hosting_scheduled_task')
-      ->fields(array(
-        'nid' => $node->nid,
-        'task_type' => $node->task_type,
-        'rid' => $node->rid,
-        'active' => $node->active,
-        'onetime' => $node->onetime,
-        'crontab' => $node->crontab,
-        'last' => $node->last,
-        'next' => $node->next,
-      ))
-      ->condition('vid', $node->vid)
-      ->execute();
-    // Wipe out old arguments first, since arguments could theoretically be removed.
-    db_delete('hosting_scheduled_task_arguments')
-      ->condition('vid', $node->vid)
-      ->execute();
-    if (isset($node->task_args) && is_array($node->task_args)) {
-      foreach ($node->task_args as $key => $value) {
-        $id = db_insert('hosting_scheduled_task_arguments')
-          ->fields(array(
-            'vid' => $node->vid,
-            'nid' => $node->nid,
-            'name' => $key,
-            'value' => $value,
-          ))
-          ->execute();
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_node_delete_revision().
- */
-function hosting_scheduled_task_node_delete_revision(&$node) {
-  db_delete('hosting_scheduled_task')
-    ->condition('vid', $node->vid)
-    ->execute();
-  db_delete('hosting_scheduled_task_arguments')
-    ->condition('vid', $node->vid)
-    ->execute();
-}
-
-/**
- * Implements hook_node_delete().
- */
-function hosting_scheduled_task_node_delete($node) {
-  db_delete('hosting_scheduled_task')
-    ->condition('nid', $node->nid)
-    ->execute();
-  db_delete('hosting_scheduled_task_arguments')
-    ->condition('nid', $node->nid)
-    ->execute();
+  return $options;
 }
 
 /**
  * Implements hook_form().
  */
 function hosting_scheduled_task_form(&$node) {
-  $type = node_type_get_type($node);
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Name'),
-    '#required' => TRUE,
-    '#description' => t('Choose a unique descriptive name for your platform. You very likely want this to be something like "Drupal 7.21".'),
-    '#size' => 40,
-    '#default_value' => $node->title,
-    '#maxlength' => 255,
-  );
-
-  if (!empty($node->rid)) {
-    $form['rid'] = array(
-      '#type' => 'item',
-      '#title' => t('Target'),
-      '#markup' => _hosting_node_link($node->rid),
-    );
-  }
-
-
-  $form['active'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Active'),
-    '#default_value' => isset($node->active) ? $node->active : 1,
-    '#description' => t('Select if this scheduled task should be active and running.'),
-  );
-
-  $form['onetime'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('One-time'),
-    '#default_value' => isset($node->onetime) ? $node->onetime : 0,
-    '#description' => t('Select if this scheduled task should run once and then become inactive.'),
-  );
-
-  $crontab = isset($node->crontab) ? $node->crontab : '';
-  $form['crontab'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Crontab schedule'),
-    '#description' => t('Pinch help info from Jenkins.'),
-    '#default_value' => $crontab,
-    '#rows' => max(count(explode("\n", $crontab)) + 1, 3),
-  );
-
+  $form = array();
 
   return $form;
 }

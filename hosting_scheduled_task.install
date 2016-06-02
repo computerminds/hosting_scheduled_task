@@ -25,41 +25,6 @@ function hosting_scheduled_task_schema() {
         'size' => 'big',
         'not null' => FALSE,
       ),
-      'rid' => array(
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'active' => array(
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 1,
-      ),
-      'onetime' => array(
-        'type' => 'int',
-        'not null' => TRUE,
-        'default' => 0,
-      ),
-      'crontab' => array(
-        'type' => 'text',
-        'not null' => TRUE,
-        'default' => '',
-        'description' => 'Crontab line(s) in *NIX format.',
-      ),
-      'last' => array(
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'default' => 0,
-        'not null' => TRUE,
-        'description' => 'Timestamp when a job was last executed.',
-      ),
-      'next' => array(
-        'type' => 'int',
-        'unsigned' => TRUE,
-        'default' => 0,
-        'not null' => TRUE,
-        'description' => 'Timestamp when a job is to be executed (next = last + period), used for fast ordering.',
-      ),
     ),
     'primary key' => array('vid'),
     'indexes' => array(
