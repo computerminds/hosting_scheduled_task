@@ -10,8 +10,8 @@
 function hosting_scheduled_task_field_default_field_instances() {
   $field_instances = array();
 
-  // Exported field_instance: 'node-scheduled_task-field_active'.
-  $field_instances['node-scheduled_task-field_active'] = array(
+  // Exported field_instance: 'node-scheduled_task-active'.
+  $field_instances['node-scheduled_task-active'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => array(
       0 => array(
@@ -37,7 +37,7 @@ function hosting_scheduled_task_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_active',
+    'field_name' => 'active',
     'label' => 'Active',
     'required' => 0,
     'settings' => array(
@@ -54,8 +54,8 @@ function hosting_scheduled_task_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_arguments'.
-  $field_instances['node-scheduled_task-field_arguments'] = array(
+  // Exported field_instance: 'node-scheduled_task-arguments'.
+  $field_instances['node-scheduled_task-arguments'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => NULL,
     'deleted' => 0,
@@ -75,7 +75,7 @@ function hosting_scheduled_task_field_default_field_instances() {
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_arguments',
+    'field_name' => 'arguments',
     'label' => 'Task Arguments',
     'required' => 0,
     'settings' => array(
@@ -92,8 +92,8 @@ function hosting_scheduled_task_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_crontab'.
-  $field_instances['node-scheduled_task-field_crontab'] = array(
+  // Exported field_instance: 'node-scheduled_task-crontab'.
+  $field_instances['node-scheduled_task-crontab'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => NULL,
     'deleted' => 0,
@@ -190,7 +190,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_crontab',
+    'field_name' => 'crontab',
     'label' => 'Crontab',
     'required' => 1,
     'settings' => array(
@@ -208,8 +208,8 @@ H H 1,15 1-11 *
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_last_executed'.
-  $field_instances['node-scheduled_task-field_last_executed'] = array(
+  // Exported field_instance: 'node-scheduled_task-last_executed'.
+  $field_instances['node-scheduled_task-last_executed'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => array(
       0 => array(
@@ -233,7 +233,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_last_executed',
+    'field_name' => 'last_executed',
     'label' => 'Last executed',
     'required' => 0,
     'settings' => array(
@@ -252,8 +252,8 @@ H H 1,15 1-11 *
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_next_execution'.
-  $field_instances['node-scheduled_task-field_next_execution'] = array(
+  // Exported field_instance: 'node-scheduled_task-next_execution'.
+  $field_instances['node-scheduled_task-next_execution'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => array(
       0 => array(
@@ -277,7 +277,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_next_execution',
+    'field_name' => 'next_execution',
     'label' => 'Next execution',
     'required' => 0,
     'settings' => array(
@@ -296,8 +296,8 @@ H H 1,15 1-11 *
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_one_time'.
-  $field_instances['node-scheduled_task-field_one_time'] = array(
+  // Exported field_instance: 'node-scheduled_task-one_time'.
+  $field_instances['node-scheduled_task-one_time'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => array(
       0 => array(
@@ -321,7 +321,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_one_time',
+    'field_name' => 'one_time',
     'label' => 'One-time',
     'required' => 0,
     'settings' => array(
@@ -338,8 +338,8 @@ H H 1,15 1-11 *
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_task_target'.
-  $field_instances['node-scheduled_task-field_task_target'] = array(
+  // Exported field_instance: 'node-scheduled_task-task_target'.
+  $field_instances['node-scheduled_task-task_target'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => NULL,
     'default_value_function' => 'entityreference_prepopulate_field_default_value',
@@ -360,7 +360,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_task_target',
+    'field_name' => 'task_target',
     'label' => 'Task Target',
     'required' => 1,
     'settings' => array(
@@ -392,8 +392,8 @@ H H 1,15 1-11 *
     ),
   );
 
-  // Exported field_instance: 'node-scheduled_task-field_task_type'.
-  $field_instances['node-scheduled_task-field_task_type'] = array(
+  // Exported field_instance: 'node-scheduled_task-task_type'.
+  $field_instances['node-scheduled_task-task_type'] = array(
     'bundle' => 'scheduled_task',
     'default_value' => NULL,
     'default_value_function' => '',
@@ -415,7 +415,7 @@ H H 1,15 1-11 *
       ),
     ),
     'entity_type' => 'node',
-    'field_name' => 'field_task_type',
+    'field_name' => 'task_type',
     'label' => 'Task type',
     'required' => 1,
     'settings' => array(

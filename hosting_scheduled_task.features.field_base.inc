@@ -10,13 +10,13 @@
 function hosting_scheduled_task_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_active'.
-  $field_bases['field_active'] = array(
+  // Exported field_base: 'active'.
+  $field_bases['active'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_active',
+    'field_name' => 'active',
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -36,13 +36,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_arguments'.
-  $field_bases['field_arguments'] = array(
+  // Exported field_base: 'arguments'.
+  $field_bases['arguments'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_arguments',
+    'field_name' => 'arguments',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'serialized_field',
@@ -51,13 +51,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'serialized',
   );
 
-  // Exported field_base: 'field_crontab'.
-  $field_bases['field_crontab'] = array(
+  // Exported field_base: 'crontab'.
+  $field_bases['crontab'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_crontab',
+    'field_name' => 'crontab',
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -70,13 +70,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_last_executed'.
-  $field_bases['field_last_executed'] = array(
+  // Exported field_base: 'last_executed'.
+  $field_bases['last_executed'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_last_executed',
+    'field_name' => 'last_executed',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',
@@ -85,13 +85,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_next_execution'.
-  $field_bases['field_next_execution'] = array(
+  // Exported field_base: 'next_execution'.
+  $field_bases['next_execution'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_next_execution',
+    'field_name' => 'next_execution',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',
@@ -100,13 +100,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'number_integer',
   );
 
-  // Exported field_base: 'field_one_time'.
-  $field_bases['field_one_time'] = array(
+  // Exported field_base: 'one_time'.
+  $field_bases['one_time'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_one_time',
+    'field_name' => 'one_time',
     'indexes' => array(
       'value' => array(
         0 => 'value',
@@ -125,13 +125,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'list_boolean',
   );
 
-  // Exported field_base: 'field_task_target'.
-  $field_bases['field_task_target'] = array(
+  // Exported field_base: 'task_target'.
+  $field_bases['task_target'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_task_target',
+    'field_name' => 'task_target',
     'indexes' => array(
       'target_id' => array(
         0 => 'target_id',
@@ -164,13 +164,13 @@ function hosting_scheduled_task_field_default_field_bases() {
     'type' => 'entityreference',
   );
 
-  // Exported field_base: 'field_task_type'.
-  $field_bases['field_task_type'] = array(
+  // Exported field_base: 'task_type'.
+  $field_bases['task_type'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_task_type',
+    'field_name' => 'task_type',
     'indexes' => array(
       'value' => array(
         0 => 'value',
